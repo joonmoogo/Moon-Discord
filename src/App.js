@@ -20,6 +20,8 @@ function App() {
         >
           Learn React
         </a>
+        <Counter></Counter>
+        <App></App>
         <Counter/>
         <Test></Test>
         
