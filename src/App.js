@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Counter from './components/counter';
+import Test from './components/test';
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
           Learn React
         </a>
         <Counter/>
+        <Test></Test>
+        
 
 
 
