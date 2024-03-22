@@ -4,11 +4,11 @@ function Test() {
 
     let [counter, setCounter] = useState(0)
 
-    function clickButton(){
+    function clickButton() {
         setCounter(++counter);
     }
 
-    function dClickButton(){
+    function dClickButton() {
         setCounter(--counter);
     }
 
