@@ -19,7 +19,8 @@ function App() {
         >
           Learn React
         </a>
-        <Counter/>
+        <Counter></Counter>
+        <App></App>
 
 
 
