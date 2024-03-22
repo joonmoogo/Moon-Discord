@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Counter from './components/counter';
+import Test from './components/test';
 
 function App() {
 
@@ -21,6 +22,9 @@ function App() {
         </a>
         <Counter></Counter>
         <App></App>
+        <Counter/>
+        <Test></Test>
+        
 
 
 
