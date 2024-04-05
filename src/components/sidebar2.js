@@ -15,16 +15,16 @@ export default function SelectedListItem() {
   };
 
   return (
-    <Box sx={{ width: '20%', maxWidth: 360, bgcolor: 'background.paper' }}>
+    <Box sx={{ height: '100%', width: '100%', maxWidth: 360, bgcolor: grey[800] }}>
       <List component="nav" aria-label="friends profile">
         <ListItemButton
           selected={selectedIndex === 0}
           onClick={(event) => handleListItemClick(event, 0)}
         >
           <ListItemAvatar>
-            <Avatar sx={{ bgcolor: red[500] }}></Avatar>
+            <Avatar sx={{ bgcolor: red[500] }}>SW</Avatar>
           </ListItemAvatar>
-          <ListItemText sx={{color: grey[900]}} primary="김상원" />
+          <ListItemText sx={{color: grey[100]}} primary="김상원" />
         </ListItemButton>
         <ListItemButton 
           selected={selectedIndex === 1}
@@ -33,7 +33,7 @@ export default function SelectedListItem() {
           <ListItemAvatar>
             <Avatar sx={{ bgcolor: orange[500] }}>GH</Avatar>
           </ListItemAvatar>
-          <ListItemText sx={{color: grey[900]}} primary="이기환" />
+          <ListItemText sx={{color: grey[100]}} primary="이기환" />
         </ListItemButton>
         <ListItemButton
           selected={selectedIndex === 2}
@@ -42,7 +42,7 @@ export default function SelectedListItem() {
           <ListItemAvatar>
             <Avatar sx={{ bgcolor: yellow[500] }}>MJ</Avatar>
           </ListItemAvatar>
-          <ListItemText sx={{color: grey[900]}} primary="이민준" />
+          <ListItemText sx={{color: grey[100]}} primary="이민준" />
         </ListItemButton>
         <ListItemButton
           selected={selectedIndex === 3}
@@ -51,7 +51,7 @@ export default function SelectedListItem() {
           <ListItemAvatar>
             <Avatar sx={{ bgcolor: green[500] }}>JJ</Avatar>
           </ListItemAvatar>
-          <ListItemText sx={{color: grey[900]}} primary="임재정" />
+          <ListItemText sx={{color: grey[100]}} primary="임재정" />
         </ListItemButton>
         <ListItemButton
           selected={selectedIndex === 4}
@@ -60,7 +60,7 @@ export default function SelectedListItem() {
           <ListItemAvatar>
             <Avatar sx={{ bgcolor: blue[500] }}>JM</Avatar>
           </ListItemAvatar>
-          <ListItemText sx={{color: grey[900]}} primary="오준묵" />
+          <ListItemText sx={{color: grey[100]}} primary="오준묵" />
         </ListItemButton>
       </List>
     </Box>
