@@ -4,6 +4,7 @@ import Counter from './components/counter';
 import Button from '@mui/joy/Button';
 import * as React from 'react';
 import Right from './components/Right';
+import ChatUI from './components/chatUI';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           width: '70%',
         }}
         >
+          <ChatUI/>
 
 
         </div>
