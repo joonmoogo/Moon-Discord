@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-export default function Counter(){
+export default function Counter() {
 
-    let [counter,setCounter] = useState(0);
-    
-    function btnClick(){
+    let [counter, setCounter] = useState(0);
+
+    function btnClick() {
         setCounter(++counter);
     }
-    return(
+    return (
         <>
             <div>counter</div>
             <button onClick={btnClick}>btn</button>
