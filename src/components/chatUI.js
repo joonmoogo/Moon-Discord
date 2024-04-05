@@ -9,6 +9,22 @@ function ChatUI() {
   const [currentMessage, setCurrentMessage] = useState("");
   const messagesEndRef = useRef(null);
   const [messageTimes, setMessageTimes] = useState([]);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+ 
 
   const sendMessage = () => {
     if (currentMessage.trim() !== "") {
@@ -24,6 +40,7 @@ function ChatUI() {
     }
   };
 
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -31,6 +48,8 @@ function ChatUI() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  
 
   // 시간을 원하는 포맷으로 변환하는 함수
   const formatTime = (date) => {
@@ -47,7 +66,8 @@ function ChatUI() {
   const isMyMessage = (userId) => userId === myUserId;
 
   return (
-    <Box sx={{ width: '100%', maxWidth: 1200, bgcolor: grey[900] }}>
+    <Box sx={{overflow: 'auto'}}>
+    <Box sx={{ width: '100%',  bgcolor: grey[900] }}>
       <Box sx={{ 
   display: 'flex', 
   alignItems: 'center', 
@@ -60,7 +80,7 @@ function ChatUI() {
   </Box>
 </Box>
       <Paper elevation={3} sx={{ bgcolor: grey[800] }}>
-        <List sx={{ maxHeight: 300, overflow: 'auto', bgcolor: grey[800] }}>
+        <List sx={{maxHeight: `${windowHeight}`, height: `${windowHeight-165}px`, overflow: 'auto', bgcolor: grey[800] }}>
         <ListItem key="1" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginY: 1 }}>
             <Card variant="borderless" sx={{ bgcolor: grey[800],  padding: '8px 16px' }}>
               <CardContent>
@@ -79,7 +99,7 @@ function ChatUI() {
             <Card variant="borderless" sx={{ bgcolor: grey[800],  padding: '8px 16px' }}>
               <CardContent>
                 {isMyMessage(message.userId) ? (
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center'}}>
                     {/* 내 메시지일 경우 */}
                     <Avatar sx={{ bgcolor: deepPurple[500], marginRight: 1 }}>{myUserAvatar}</Avatar>
                     <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-15px'}}>{myUserName}</Box>
@@ -108,7 +128,7 @@ function ChatUI() {
             value={currentMessage}
             onChange={(e) => setCurrentMessage(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-            placeholder="Type a message..."
+            placeholder={`@${otherUserName}에게 메세지 보내기`}
             margin="normal"
             inputProps={{ style: { fontSize: '14px' } }}
           />
@@ -118,6 +138,7 @@ function ChatUI() {
           </IconButton>
         </Box>
       </Paper>
+    </Box>
     </Box>
   );
 }
