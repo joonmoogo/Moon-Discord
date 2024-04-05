@@ -1,9 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import Counter from './components/counter';
-import Button from '@mui/joy/Button';
+
 import * as React from 'react';
 import Right from './components/Right';
+
 import ChatUI from './components/chatUI';
 import Sidebar from './components/sidebar';
 import SelectedListItem from './components/sidebar2';
@@ -16,6 +17,7 @@ function App() {
         backgroundColor: 'red',
         height: '100%',
         width: '5%'
+		
       }}>
         <Sidebar />
       </div>
@@ -38,6 +40,7 @@ function App() {
 
 
       </div>
+
       <div className='right' style={{
         backgroundColor: 'green',
         height: '100%',
