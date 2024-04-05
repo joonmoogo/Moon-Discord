@@ -67,7 +67,7 @@ function ChatUI() {
 
   return (
     <Box sx={{overflow: 'auto'}}>
-    <Box sx={{ width: '100%', maxWidth: 1200, bgcolor: grey[900] }}>
+    <Box sx={{ width: '100%',  bgcolor: grey[900] }}>
       <Box sx={{ 
   display: 'flex', 
   alignItems: 'center', 

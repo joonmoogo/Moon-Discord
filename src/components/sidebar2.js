@@ -7,38 +7,12 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { red, orange, yellow, green, blue, grey } from '@mui/material/colors';
 
-// 클라이언트, 서버, DB
-
-localhost:3000/api/user
-
-// 클라이언트 -> 서버 fetch('/localhost:3000/api/user')
-// 서버 -> 클라이언트 
-// SQL -> CREATE TABLE user (id number, username: string);
-//  SELECT * FROM user
-//  SELECT * FROM user WHERE id='1';
-// db.collection.get({username:joon});
-// respond.json({id:1,username:joon});
-
-// /api/user/1 : 아이디 1번인 정보만 리턴하겠따
-// /api/user : 모든 정보 리턴하겠따
-
-// fetch(/api/user)
-
-
-
 export default function SelectedListItem() {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
-
-  const data = fetch('/user');
-
-  data ={id:1,username:joon};
-
-  const userid = data.id;
-  const username = data.username
 
   return (
     <Box sx={{ width: '20%', maxWidth: 360, bgcolor: 'background.paper' }}>
