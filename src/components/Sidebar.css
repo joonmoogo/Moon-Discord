@@ -13,7 +13,7 @@
 }
 
 body {
-	background: var(--color-dark);
+	background-color: var(--color-dark);
 	font-family: "Open Sans", sans-serif;
 	color: var(--color-full-white);
 	min-height: 100vh;
@@ -23,23 +23,15 @@ nav {
 	position: fixed;
 	top: 0;
 	bottom: 0;
-	overflow-y: scroll;
-	width: 100%;
-}
-nav::-webkit-scrollbar {
-	display: none;
 }
 
-.guilds-container {
-	background: var(--color-not-quite-black);
+.squircles{
+	background-color: var(--color-not-quite-black);
+	min-height: 100vh;
 	padding: 1rem;
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
 	gap: 1rem;
-	position: absolute;
-	box-sizing: border-box;
-	z-index: 2;
 }
 
 .squircle {
@@ -54,83 +46,31 @@ nav::-webkit-scrollbar {
 	justify-content: center;
 	align-items: center;
 }
-.squircle:hover {
-	border-radius: 36%;
-}
-.squircle:hover::before {
-	transform: translate(-100%, -50%) scale(.5);
-} 
-.squircle:hover .popper-boi {
-	opacity: 1;
-	transform: translateY(-50%) scale(1);
-}
 
-/* pill */
-.squircle::before {
+.squircle::before{
 	content: '';
 	width: 100%;
 	height: 100%;
-	background: var(--color-full-white);
+	background-color: #ffffff;
 	position: absolute;
 	border-radius: 5px;
 	top: 50%;
-	transform: translate(-100%, -50%) scale(0);
-	transition: transform 180ms;
+	transform: translate(-100%, -50%) scale(.5);
 }
 
-.purple-boi:hover {
-	background: var(--color-blurple);
+.squircle:hover{
+	border-radius: 36%;
 }
 
-.green-boi {
-	color: var(--color-fantastic-green);
-}
 
-.green-boi:hover {
-	background: var(--color-fantastic-green);
-	color: var(--color-full-white);
-}
 
-.divider {
+.divider{
 	width: 100%;
 	background: var(--color-full-white);
 	height: 2px;
 	border-radius: 1px;
 	opacity: .06;
 	transform: scale(.75);
-}
-
-.popper-boi {
-	background: var(--color-actually-black);
-	padding: 0.68rem 1rem;
-	position: absolute;
-	top: 50%;
-	left: 155%;
-	transform-origin: left;
-	transform: translateY(-50%) scale(0.98);
-	width: max-content;
-	max-width: 256px;
-	border-radius: 4px;
-	opacity: 0;
-	transition: opacity 64ms, transform 128ms cubic-bezier(0.43, 0.09, 0.38, 2.56);
-	pointer-events: none;
-	color: var(--color-full-white);
-}
-
-.popper-boi::before {
-	content: '';
-	position: absolute;
-	left: -2px;
-	top: 50%;
-	transform: translateY(-50%) rotate(45deg);
-	background: var(--color-actually-black);
-	width: 24px;
-	height: 24px;
-	z-index: -1;
-}
-
-.server-icon {
-	width: inherit;
-	border-radius: inherit;
+	display: flex;
 }
 
