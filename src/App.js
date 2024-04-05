@@ -1,9 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import Counter from './components/counter';
-import Button from '@mui/joy/Button';
+
 import * as React from 'react';
 import Right from './components/Right';
+import Sidebar from './components/Sidebar';
 
 function App() {
 
@@ -13,8 +14,9 @@ function App() {
         backgroundColor: 'red',
         height: '100%',
         width: '5%'
+		
       }}>
-
+		<Sidebar/>
       </div>
       <div className='left' style={{
         backgroundColor: 'orange',
@@ -43,6 +45,7 @@ function App() {
           {/* <Right/> */}
         </div>
       </div>
+	 
   );
 }
 
