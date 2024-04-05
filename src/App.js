@@ -6,7 +6,6 @@ import Button from '@mui/joy/Button';
 function App() {
 
   return (
-
     <>
       <div>hello world</div>
     </>
