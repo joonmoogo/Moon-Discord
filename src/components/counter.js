@@ -9,9 +9,8 @@ export default function Counter() {
     }
     return (
         <>
-            <div>counter</div>
-            <button onClick={btnClick}>btn</button>
-            <div>{counter}</div>
+            
+
         </>
     )
 }
