@@ -7,9 +7,12 @@ import Right from './components/Right';
 import SelectedListItem from './components/sidebar2';
 import ChatUI from './components/chatUI';
 import Sidebar from './components/sidebar';
-
+import { useEffect } from 'react';
+import socket from './util/socket';
 function App() {
-
+  useEffect(()=>{
+    socket.emit('hello',socket.id)
+  },[])
   return (
     <div className='container' style={{ display: 'flex', height: '100vh' }}>
       <div className='left-left' style={{
