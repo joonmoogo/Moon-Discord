@@ -5,6 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ListItemButton from '@mui/material/ListItemButton';
+import { grey } from '@mui/material/colors';
 
 export default function Right() {
     const list = [
@@ -29,7 +30,8 @@ export default function Right() {
         { src: '/static/images/avatar/8.jpg', name: 'oooo' },
     ]
     return (
-        <List sx={{ width: '100%', bgcolor: 'white' ,}} >
+        
+        <List sx={{ width: '100%', bgcolor: grey[800] ,}} >
             {
                 list.map((e) => {
                     return (
