@@ -10,17 +10,15 @@ import Sidebar from './components/sidebar';
 import { useEffect } from 'react';
 import socket from './util/socket';
 function App() {
-  useEffect(()=>{
-    socket.emit('hello',socket.id)
-  },[])
+
   return (
-    <div className='container' style={{ display: 'flex', height: '100vh' }}>
+    
+    <div className='container' style={containerStyle}>
       <div className='left-left' style={{
         backgroundColor: 'red',
         height: '100%',
         width: '5%',
         border: '1px solid black',
-
       }}>
         <Sidebar/>
       </div>
