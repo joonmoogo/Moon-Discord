@@ -26,6 +26,7 @@ function App() {
         height: '100%',
         width: '5%',
         border: '1px solid black',
+        overflowY: 'scroll',
       }}>
         <Sidebar/>
       </div>
@@ -57,6 +58,7 @@ function App() {
         width: '15%',
         overflow: 'hidden',
         border: '1px solid black',
+        overflowY: 'scroll',
       }}
       >
         <Right></Right>
