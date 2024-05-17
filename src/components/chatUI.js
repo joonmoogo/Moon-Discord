@@ -4,6 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { deepPurple, grey } from '@mui/material/colors';
 import socket from '../util/socket';
+import { useGlobalState } from '../util/globalState';
 
 function ChatUI() {
   const [messages, setMessages] = useState([]);
@@ -14,7 +15,13 @@ function ChatUI() {
 
   const [myUserName, setMyUserName] = useState();
   const [otherUserName, setOtherUserName] = useState();
+  const [channel, setChannel] = useGlobalState();
 
+
+
+  useEffect(() => {
+    console.log(channel);
+  }, [channel])
 
   socket.on('message', (data) => {
     const newMessage = {
@@ -28,7 +35,7 @@ function ChatUI() {
     setMessages([...messages, newMessage]);
   })
 
-  socket.on('User',(data)=>{
+  socket.on('User', (data) => {
     console.log(data);
   })
 
@@ -51,6 +58,7 @@ function ChatUI() {
   }, []);
 
   const sendMessage = () => {
+    setChannel(!channel);
     if (currentMessage.trim() !== "") {
       const newTime = new Date();
       const newMessage = {
