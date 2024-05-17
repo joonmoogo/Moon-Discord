@@ -40,7 +40,7 @@ function Sidebar() {
 	*/
 	return (
 
-		<div class="squircles">
+		<div class="left_left_box">
 			<div class="squircle">
 			</div>
 

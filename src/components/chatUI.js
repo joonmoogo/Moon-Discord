@@ -101,20 +101,20 @@ function ChatUI() {
           bgcolor: grey[900],
           padding: '10px',
         }}>
-          <Avatar sx={{ bgcolor: grey[500], width: '20px', height: '20px', fontSize: '10px' }}>{otherUserAvatar}</Avatar>
+          <Avatar sx={{ bgcolor: grey[500], width: '46px', height: '46px', fontSize: '20px' }}>{otherUserAvatar}</Avatar>
           <Box sx={{ marginLeft: '10px', color: 'white', fontWeight: 'bold', fontSize: '15px' }}>
             {otherUserName}
           </Box>
         </Box>
         <Paper elevation={3} sx={{ bgcolor: grey[800] }}>
-          <List sx={{ maxHeight: `${windowHeight}`, height: `${windowHeight - 165}px`, overflow: 'auto', bgcolor: grey[800] }}>
+          <List sx={{ maxHeight: `${windowHeight}`, height: `${windowHeight - 191}px`, overflow: 'auto', bgcolor: grey[800] }}>
             <ListItem key="1" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginY: 1 }}>
               <Card variant="borderless" sx={{ bgcolor: grey[800], padding: '8px 16px' }}>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     {/* 상대방 메시지일 경우 */}
                     <Avatar sx={{ bgcolor: grey[500], marginRight: 1 }}>{otherUserAvatar}</Avatar>
-                    <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-15px' }}>Other</Box>
+                    <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>Other</Box>
                   </Box>
                   <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>테스트 용 메세지</Box> {/* 상대방 메세지 확인 용 테스트 List */}
                   <Box sx={{ fontSize: '12px', color: grey[500] }}>{formatTime(new Date())}</Box>
@@ -129,13 +129,13 @@ function ChatUI() {
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {/* 내 메시지일 경우 */}
                         <Avatar sx={{ bgcolor: deepPurple[500], marginRight: 1 }}>{myUserAvatar}</Avatar>
-                        <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-15px' }}>{myUserName}</Box>
+                        <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>{myUserName}</Box>
                       </Box>
                     ) : (
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {/* 상대방 메시지일 경우 */}
                         <Avatar sx={{ bgcolor: grey[500], marginRight: 1 }}>{otherUserAvatar}</Avatar>
-                        <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-15px' }}>{otherUserName}</Box>
+                        <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>{otherUserName}</Box>
                       </Box>
                     )}
                     <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>{message.text}</Box>
@@ -146,7 +146,7 @@ function ChatUI() {
             ))}
             <div ref={messagesEndRef} />
           </List>
-          <Box sx={{ p: 2, display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ p: 2.5, display: 'flex', alignItems: 'center' }}>
             <IconButton color="primary" aria-label="add photo">
               <AddAPhotoIcon />
             </IconButton>
@@ -157,7 +157,7 @@ function ChatUI() {
               onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
               placeholder={`@${otherUserName}에게 메세지 보내기`}
               margin="normal"
-              inputProps={{ style: { fontSize: '14px' } }}
+              inputProps={{ style: { fontSize: '16px', color: 'white', height: '12px' } }}
             />
             {/* 전송 아이콘을 IconButton에 넣기 */}
             <IconButton color="primary" aria-label="send message" onClick={sendMessage}>
