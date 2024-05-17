@@ -13,8 +13,8 @@ function ChatUI() {
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   const [myUserName, setMyUserName] = useState();
-  const [otherUserName,setOtherUserName] = useState();
-  
+  const [otherUserName, setOtherUserName] = useState();
+
 
   socket.on('message', (data) => {
     const newMessage = {
@@ -26,13 +26,17 @@ function ChatUI() {
     console.log(newMessage);
     setOtherUserName(data.username)
     setMessages([...messages, newMessage]);
-
   })
 
-  useEffect(()=>{
+  socket.on('User',(data)=>{
+    console.log(data);
+  })
+
+  useEffect(() => {
     const username = prompt('username?');
     setMyUserName(username);
-  },[])
+    socket.emit('user', { name: username });
+  }, [])
 
   useEffect(() => {
     const handleResize = () => {
@@ -52,7 +56,7 @@ function ChatUI() {
       const newMessage = {
         text: currentMessage, // 메시지 텍스트
         userId: myUserId, // 메시지를 보내는 유저의 ID
-        username:myUserName,
+        username: myUserName,
         time: new Date() // 메시지 보낸 시간
       };
       socket.emit('message', newMessage);
