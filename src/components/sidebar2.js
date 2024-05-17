@@ -7,6 +7,8 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { red, orange, yellow, green, blue, grey } from '@mui/material/colors';
 
+
+
 export default function SelectedListItem() {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
@@ -15,7 +17,14 @@ export default function SelectedListItem() {
   };
 
   return (
-    <Box sx={{ height: '100%', width: '100%', bgcolor: grey[800] }}>
+
+    <Box sx={{height: '100%', width: '100%', bgcolor: grey[800] }}>
+      <Box sx={{padding: '10px 0px 0px 0px', height: '8%', width: '100%', bgcolor: grey[900] }}>
+        <div class="server_name">
+			  	<Avatar alt="" src=""></Avatar>
+		  	</div>
+      </Box>
+      <Box sx={{ height: '90%', width: '100%', bgcolor: grey[800] }}>
       <List component="nav" aria-label="friends profile">
         <ListItemButton
           selected={selectedIndex === 0}
@@ -63,6 +72,7 @@ export default function SelectedListItem() {
           <ListItemText sx={{color: grey[100]}} primary="오준묵" />
         </ListItemButton>
       </List>
+      </Box>
     </Box>
   );
 }
