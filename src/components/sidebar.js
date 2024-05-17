@@ -50,6 +50,9 @@ function Sidebar() {
 			<div id = "newCh">
 			</div>
 
+			
+			
+
 			<button onClick={AddChannel} id="btn1"  class ="button" ><AddIcon/></button>
 			
 
