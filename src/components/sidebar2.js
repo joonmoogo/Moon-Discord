@@ -16,8 +16,6 @@ import io from 'socket.io-client';
 
 const socket = io('http://localhost:3000'); // 서버 주소를 적절히 설정하세요
 
-
-
 export default function SelectedListItem() {
   const [selectedIndex, setSelectedIndex] = useState(0); // 선택된 인덱스를 관리하는 상태
   const [channels, setChannels] = useState([]); // 채널 리스트를 관리하는 상태
@@ -55,16 +53,8 @@ export default function SelectedListItem() {
 
   // 채널 나가기 함수
   const handleChannelExit = (index) => {
-    const updatedChannels = channels.map((channel, i) => {
-      if (i === index) {
-        return {
-          ...channel,
-          channelusers: channel.channelusers.filter((user) => user !== '나의 이름'), // '나의 이름'을 현재 사용자 이름으로 대체하세요
-        };
-      }
-      return channel;
-    });
-
+    const updatedChannels = [...channels]; // 채널 리스트 복사
+    updatedChannels[index].channelusers = updatedChannels[index].channelusers.filter((user) => user !== '나의 이름'); // 현재 사용자 제외
     setChannels(updatedChannels);
     socket.emit('channelExit', updatedChannels[index]);
 
@@ -75,7 +65,6 @@ export default function SelectedListItem() {
   };
 
   return (
-<<<<<<< HEAD
     <Box sx={{ height: '100%', width: '100%', bgcolor: grey[800], display: 'flex', flexDirection: 'column' }}>
       <List component="nav" aria-label="channel members" sx={{ flex: 1, overflowY: 'auto' }}>
         {channels[selectedIndex] && channels[selectedIndex].channelusers.map((user, index) => (
@@ -98,63 +87,6 @@ export default function SelectedListItem() {
             <ExitToAppIcon />
           </IconButton>
         </Tooltip>
-=======
-
-    <Box sx={{height: '100%', width: '100%', bgcolor: grey[800] }}>
-      <Box sx={{padding: '10px 0px 0px 0px', height: '8%', width: '100%', bgcolor: grey[900] }}>
-        <div class="server_name">
-			  	<Avatar alt="" src=""></Avatar>
-		  	</div>
-      </Box>
-      <Box sx={{ height: '90%', width: '100%', bgcolor: grey[800] }}>
-      <List component="nav" aria-label="friends profile">
-        <ListItemButton
-          selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}
-        >
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: red[500] }}>SW</Avatar>
-          </ListItemAvatar>
-          <ListItemText sx={{color: grey[100]}} primary="김상원" />
-        </ListItemButton>
-        <ListItemButton 
-          selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
-        >
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: orange[500] }}>GH</Avatar>
-          </ListItemAvatar>
-          <ListItemText sx={{color: grey[100]}} primary="이기환" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}
-        >
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: yellow[500] }}>MJ</Avatar>
-          </ListItemAvatar>
-          <ListItemText sx={{color: grey[100]}} primary="이민준" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 3}
-          onClick={(event) => handleListItemClick(event, 3)}
-        >
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: green[500] }}>JJ</Avatar>
-          </ListItemAvatar>
-          <ListItemText sx={{color: grey[100]}} primary="임재정" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 4}
-          onClick={(event) => handleListItemClick(event, 4)}
-        >
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: blue[500] }}>JM</Avatar>
-          </ListItemAvatar>
-          <ListItemText sx={{color: grey[100]}} primary="오준묵" />
-        </ListItemButton>
-      </List>
->>>>>>> df5f33ea1442ade734fddd9a4fa0e81418686ef5
       </Box>
     </Box>
   );
