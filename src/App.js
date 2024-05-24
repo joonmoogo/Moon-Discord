@@ -14,36 +14,8 @@ import useUserType from './util/useUserType';
 import { GlobalStateProvider } from './util/globalState';
 function App() {
 
-<<<<<<< HEAD
-  return (
-    
-    <div className='container' style={{display:'flex',height:'100vh'}}>
-      <div className='left-left' style={{
-        backgroundColor: 'red',
-        height: '100%',
-        width: '5%',
-        border: '1px solid black',
-      }}>
-        <Sidebar/>
-      </div>
-      <div className='left' style={{
-        backgroundColor: 'orange',
-        height: '100%',
-        width: '20%',
-        border: '1px solid black',
-      }}
-      >
-        <SelectedListItem />
-      </div>
-      <div className='mid' style={{
-        backgroundColor: 'blue',
-        height: '100%',
-        width: '60%',
-        border: '1px solid black',
-=======
   const deviceType = useDeviceType();
   const userType = useUserType();
->>>>>>> df5f33ea1442ade734fddd9a4fa0e81418686ef5
 
   return (
     <GlobalStateProvider>

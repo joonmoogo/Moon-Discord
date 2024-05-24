@@ -9,16 +9,19 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { grey } from '@mui/material/colors';
+import { deepPurple, grey } from '@mui/material/colors';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-import io from 'socket.io-client';
-
-const socket = io('http://localhost:3000'); // 서버 주소를 적절히 설정하세요
+import socket from '../util/socket';
 
 export default function SelectedListItem() {
   const [selectedIndex, setSelectedIndex] = useState(0); // 선택된 인덱스를 관리하는 상태
   const [channels, setChannels] = useState([]); // 채널 리스트를 관리하는 상태
+  const [channelUsers,setChannelUsers] = useState([]);
+
+  const me = window.localStorage.getItem('id');
+  const parsedMe = JSON.parse(me).username;
+
 
   // 리스트 아이템 클릭 시 실행되는 함수
   const handleListItemClick = (event, index) => {
@@ -28,20 +31,28 @@ export default function SelectedListItem() {
   // 컴포넌트가 마운트될 때 실행되는 이펙트
   useEffect(() => {
     socket.on('channelJoin', (data) => {
-      const newMember = {
-        channelname: data.channelname,
-        friendname: data.friendname,
-        channelusers: data.channelusers,
-        channeltype: data.channeltype,
-      };
-      setChannels((prevChannels) => [...prevChannels, newMember]); // 새로운 멤버를 채널 리스트에 추가
-      console.log('채널 유저 수', data.channelusers.length);
-    });
+      console.log('channelJoin Data: ',data);
+      setChannels((prevChannels) => [...prevChannels, data]); // 새로운 멤버를 채널 리스트에 추가
+      setChannelUsers((prevData)=>[...prevData, ...data.channelUsers])
+      // console.log('채널 유저 수', data.channelusers.length);
+    },[]);
 
     return () => {
       socket.off('channelJoin');
     };
-  }, []);
+  },[]);
+
+  useEffect(()=>{
+    // console.log('parsedMe: ',parsedMe);
+    // console.log('channelusers: ',channelUsers);
+  },[channelUsers])
+
+  useEffect(()=>{
+    socket.on('getChannel',(data)=>{
+      const channelUsers = data.channelUsers;
+      setChannelUsers(channelUsers);
+    })
+  },[])
 
   // 멤버 초대 함수
   const handleInviteMember = (friendname) => {
@@ -67,10 +78,11 @@ export default function SelectedListItem() {
   return (
     <Box sx={{ height: '100%', width: '100%', bgcolor: grey[800], display: 'flex', flexDirection: 'column' }}>
       <List component="nav" aria-label="channel members" sx={{ flex: 1, overflowY: 'auto' }}>
-        {channels[selectedIndex] && channels[selectedIndex].channelusers.map((user, index) => (
+        {/* <Avatar sx={{ bgcolor: deepPurple[500] }}>{user}</Avatar> */}
+        {channelUsers.map((user, index) => (
           <ListItem key={index}>
             <ListItemAvatar>
-              <Avatar sx={{ bgcolor: grey[500] }}>{user[0]}</Avatar>
+              {<Avatar sx={{ bgcolor: grey[500] }}>{user}</Avatar>}
             </ListItemAvatar>
             <ListItemText sx={{ color: grey[100] }} primary={user} />
           </ListItem>

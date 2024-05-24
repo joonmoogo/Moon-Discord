@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Box, Paper, List, ListItem, Card, CardContent, Avatar, TextField, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { deepPurple, grey } from '@mui/material/colors';
 import socket from '../util/socket';
 import { useGlobalState } from '../util/globalState';
@@ -34,11 +35,8 @@ function ChatUI() {
     setMessages([...messages, newMessage]);
   })
 
-  socket.on('user',(data)=>{
-
+  socket.on('User', (data) => {
     console.log(data);
-    const modifiedData = JSON.stringify(data)
-    window.localStorage.setItem('id',modifiedData)
   })
 
   useEffect(() => {
@@ -135,7 +133,7 @@ function ChatUI() {
               <ListItem key={index} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginY: 1 }}>
                 <Card variant="borderless" sx={{ bgcolor: grey[800], padding: '8px 16px' }}>
                   <CardContent>
-                    {isMyMessage(message.userId) ? (
+                   {isMyMessage(message.userId) ? (
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {/* 내 메시지일 경우 */}
                         <Avatar sx={{ bgcolor: deepPurple[500], marginRight: 1 }}>{myUserAvatar}</Avatar>
@@ -158,7 +156,7 @@ function ChatUI() {
           </List>
           <Box sx={{ p: 2.5, display: 'flex', alignItems: 'center' }}>
             <IconButton color="primary" aria-label="add photo">
-              {/* <AddAPhotoIcon /> */}
+              <AddAPhotoIcon />
             </IconButton>
             <TextField
               fullWidth
