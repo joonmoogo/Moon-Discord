@@ -6,38 +6,40 @@ import AddIcon from '@mui/icons-material/Add';
 import socket from '../util/socket';
 
 function Sidebar() {
-	const [setChannel, setNewchannel] = useState();
-
+	const [channelName, setChannelName] = useState();
+	const [channels, setChannels] = useState([]);
+	useEffect(() => {
+		// 소켓을 통해 서버로부터 받은 채널 데이터를 처리하는 이벤트 핸들러
+		socket.on('channel', (data) => {
+			console.log(data);
+		  // 받은 채널 데이터를 channels 배열에 추가
+		  setChannels([...channels, data]);
+		});
+		 
+		return () => {
+			socket.off('channel');
+		  };
+		
+		}, [channels]);
 
 	function AddChannel() {
-		const channelname = prompt('channel name?');
-		setNewchannel(channelname);
-	
-		
-		socket.emit('channel', (data) => {
-			const newChannel = {
-				channelname: data.channelname,
-			};
-			console.log(newChannel);
-			setChannel(data.name)
-		})
-		
-		let newCh = document.getElementById('newCh');
-		let new_squircle = document.createElement('div');
-		new_squircle.setAttribute('class', 'squircle');
-		new_squircle.innerHTML = channelname;
-		new_squircle.style.marginBottom = "10px";
-		
-		newCh.appendChild(new_squircle);
-		
+		const inputchannelname = prompt('channel');
+		if (inputchannelname) {
+			setChannelName(inputchannelname);
+			socket.emit('channel', { channelName: inputchannelname});
+			const localData = window.localStorage.getItem('id');
+			const parsedData = JSON.parse(localData);
+			socket.emit('channelJoin',{
+				username:parsedData.username,
+				channelName:inputchannelname
+			})
+		}
 	}
-	/*
-	const btn = document.getElementById("btn1");
-	if (btn) {
-	  btn.addEventListener('click', AddChannel);
-	}
-	S	
-	*/
+
+	socket.on('channelJoin',(data)=>{
+		console.log(data)
+	})
+
 	return (
 
 		<div class="squircles">
@@ -47,15 +49,15 @@ function Sidebar() {
 			<div class="divider">
 			</div>
 
-			<div id = "newCh">
-			</div>
-
+			{channels.map((channel, index) => (
+        <div key={index} className="squircle">
+          {/* 채널 이름만 표시하도록 수정 */}
+          {channel.channelName}
+        </div>
+      ))}
 			
-			
-
 			<button onClick={AddChannel} id="btn1"  class ="button" ><AddIcon/></button>
-			
-
+		
 		</div>
 
 

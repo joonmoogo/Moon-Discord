@@ -16,7 +16,7 @@ function App() {
   const deviceType = useDeviceType();
   const userType = useUserType();
 
-
+  
   
   return (    
     <div className='container' style={{ display: 'flex', height: '100vh' }}>

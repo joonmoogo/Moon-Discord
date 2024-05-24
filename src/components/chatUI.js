@@ -28,8 +28,10 @@ function ChatUI() {
     setMessages([...messages, newMessage]);
   })
 
-  socket.on('User',(data)=>{
+  socket.on('user',(data)=>{
     console.log(data);
+    const modifiedData = JSON.stringify(data)
+    window.localStorage.setItem('id',modifiedData)
   })
 
   useEffect(() => {
