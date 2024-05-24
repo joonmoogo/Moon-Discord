@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Box, Paper, List, ListItem, Card, CardContent, Avatar, TextField, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { deepPurple, grey } from '@mui/material/colors';
 import socket from '../util/socket';
 
@@ -144,7 +143,7 @@ function ChatUI() {
           </List>
           <Box sx={{ p: 2, display: 'flex', alignItems: 'center' }}>
             <IconButton color="primary" aria-label="add photo">
-              <AddAPhotoIcon />
+              {/* <AddAPhotoIcon /> */}
             </IconButton>
             <TextField
               fullWidth

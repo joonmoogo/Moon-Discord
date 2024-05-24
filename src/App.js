@@ -13,7 +13,7 @@ function App() {
 
   return (
     
-    <div className='container' style={containerStyle}>
+    <div className='container' style={{display:'flex',height:'100vh'}}>
       <div className='left-left' style={{
         backgroundColor: 'red',
         height: '100%',
