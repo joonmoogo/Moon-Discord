@@ -79,19 +79,6 @@
 	display: flex;
 }
 
-.text-box{
-	background: var(--color-actually-black);
-	padding: 0.68rem 1rem;
-	position: absolute;
-	top: 50%;
-	left: 155%;
-	transform: translateY(-50%);
-	width: max-content;
-	border-radius: 4px;
-}
-
-
-
 .button{
 	background: grey;
 	width: 48px;
