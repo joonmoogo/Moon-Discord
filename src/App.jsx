@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Counter from './components/counter';
 
@@ -9,7 +8,7 @@ import ChatUI from './components/chatUI';
 import Sidebar from './components/sidebar';
 import { useEffect } from 'react';
 import socket from './util/socket';
-import useDeviceType from './util/useDeviceType';
+import useDeviceType from './util/useDeviceType.';
 import useUserType from './util/useUserType';
 import { GlobalStateProvider } from './util/globalState';
 function App() {

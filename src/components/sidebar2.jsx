@@ -20,7 +20,9 @@ export default function SelectedListItem() {
   const [channelUsers,setChannelUsers] = useState([]);
 
   const me = window.localStorage.getItem('id');
-  const parsedMe = JSON.parse(me).username;
+  if(me){
+    const parsedMe = JSON.parse(me).username;
+  }
 
 
   // 리스트 아이템 클릭 시 실행되는 함수
