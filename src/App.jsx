@@ -16,20 +16,26 @@ function App() {
   const deviceType = useDeviceType();
   const userType = useUserType();
 
+  /*
+  TODO-
+  1) 채널 추가,
+  2) 들어온 친구들
+  3) 
+   */
+
   return (
     <GlobalStateProvider>
-      <div className='container' style={{ display: 'flex', height: '100vh' }}>
+      <div className='container' style={{ display: 'flex', height: '100dvh', width:'100vw',overflow:'hidden' }}>
         {/* 내가 속한 채널 */}
         <div className='left-left' style={{
           backgroundColor: 'red',
           height: '100%',
           width: '5%',
           border: '1px solid black',
-          overflowY: 'scroll',
         }}>
           <Sidebar />
         </div>
-        {/* 채널 안에 속한 채팅채널, 혹은 음성채널 */}
+        {/* 채널 안에 속한 사람들 */}
         <div className='left' style={{
           backgroundColor: 'orange',
           height: '100%',
@@ -50,7 +56,7 @@ function App() {
         >
           <ChatUI></ChatUI>
         </div>
-        {/* 채팅방에 속한 친구 목록 */}
+        {/* 글로벌 친구 모음 */}
         <div className='right' style={{
           backgroundColor: 'green',
           height: '100%',
@@ -58,6 +64,7 @@ function App() {
           overflow: 'hidden',
           border: '1px solid black',
           overflowY: 'scroll',
+          scrollbarWidth:'none'
         }}
         >
           <Right></Right>

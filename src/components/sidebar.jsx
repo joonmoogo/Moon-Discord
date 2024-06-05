@@ -57,7 +57,7 @@ function Sidebar() {
 
 	return (
 
-		<div class="left_left_box">
+		<div class="left_left_box" style={{overflow:'hidden'}}>
 			<div class="squircle">
 			</div>
 
