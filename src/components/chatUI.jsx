@@ -15,34 +15,24 @@ function ChatUI() {
 
   const [myUserName, setMyUserName] = useState();
   const [otherUserName, setOtherUserName] = useState();
-  const [channel, setChannel] = useGlobalState();
 
-
+  /* 채널 state는 전역 state임  */
+  const [currentChannel, setCurrentChannel, userList, setUserList, user, setUser, thisChannel, setThisChannel] = useGlobalState();
 
   useEffect(() => {
-    console.log(channel);
-  }, [channel])
 
-  socket.on('message', (data) => {
-    const newMessage = {
-      text: data.text, // 메시지 텍스트
-      userId: data.userId, // 메시지를 보내는 유저의 ID
-      username: data.username,
-      time: new Date() // 메시지 보낸 시간
-    };
-    console.log(newMessage);
-    setOtherUserName(data.username)
-    setMessages([...messages, newMessage]);
-  })
-
-  socket.on('User', (data) => {
-    console.log(data);
-  })
+    socket.on('message', (data) => {
+      console.log(data);
+      setMessages([...messages, data]);
+    })
+  }, [])
 
   useEffect(() => {
     const username = prompt('username?');
-    setMyUserName(username);
-    socket.emit('user', { name: username });
+    if (username) {
+      setMyUserName(username);
+      socket.emit('user', { name: username });
+    }
   }, [])
 
   useEffect(() => {
@@ -58,20 +48,19 @@ function ChatUI() {
   }, []);
 
   const sendMessage = () => {
-    setChannel(!channel);
-    if (currentMessage.trim() !== "") {
-      const newTime = new Date();
-      const newMessage = {
-        text: currentMessage, // 메시지 텍스트
-        userId: myUserId, // 메시지를 보내는 유저의 ID
-        username: myUserName,
-        time: new Date() // 메시지 보낸 시간
-      };
-      socket.emit('message', newMessage);
-      setMessages([...messages, newMessage]);
-      setMessageTimes([...messageTimes, newTime]);
-      setCurrentMessage("");
-    }
+    const newTime = new Date();
+    const newMessage = {
+      room: thisChannel.channelName,
+      text: currentMessage, // 메시지 텍스트
+      username: user.username,
+      time: new Date() // 메시지 보낸 시간
+    };
+    console.log(newMessage);
+    socket.emit('message', newMessage);
+    setMessages([...messages, newMessage]);
+    setMessageTimes([...messageTimes, newTime]);
+    setCurrentMessage("");
+
   };
 
   const scrollToBottom = () => {
@@ -85,9 +74,9 @@ function ChatUI() {
 
 
   // 시간을 원하는 포맷으로 변환하는 함수
-  const formatTime = (date) => {
-    return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-  };
+  // const formatTime = (date) => {
+  //   return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  // };
 
   // const myUserName = 'MYNAME';
   const myUserId = socket.id;
@@ -111,7 +100,7 @@ function ChatUI() {
         }}>
           <Avatar sx={{ bgcolor: grey[500], width: '46px', height: '46px', fontSize: '20px' }}>{otherUserAvatar}</Avatar>
           <Box sx={{ marginLeft: '10px', color: 'white', fontWeight: 'bold', fontSize: '15px' }}>
-            {otherUserName}
+            {thisChannel.channelName}
           </Box>
         </Box>
         <Paper elevation={3} sx={{ bgcolor: grey[800] }}>
@@ -125,7 +114,7 @@ function ChatUI() {
                     <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>Other</Box>
                   </Box>
                   <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>테스트 용 메세지</Box> {/* 상대방 메세지 확인 용 테스트 List */}
-                  <Box sx={{ fontSize: '12px', color: grey[500] }}>{formatTime(new Date())}</Box>
+                  <Box sx={{ fontSize: '12px', color: grey[500] }}>{}</Box>
                 </CardContent>
               </Card>
             </ListItem>
@@ -133,7 +122,7 @@ function ChatUI() {
               <ListItem key={index} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginY: 1 }}>
                 <Card variant="borderless" sx={{ bgcolor: grey[800], padding: '8px 16px' }}>
                   <CardContent>
-                   {isMyMessage(message.userId) ? (
+                    {isMyMessage(message.userId) ? (
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {/* 내 메시지일 경우 */}
                         <Avatar sx={{ bgcolor: deepPurple[500], marginRight: 1 }}>{myUserAvatar}</Avatar>
@@ -143,11 +132,11 @@ function ChatUI() {
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {/* 상대방 메시지일 경우 */}
                         <Avatar sx={{ bgcolor: grey[500], marginRight: 1 }}>{otherUserAvatar}</Avatar>
-                        <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>{otherUserName}</Box>
+                        <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}></Box>
                       </Box>
                     )}
                     <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>{message.text}</Box>
-                    <Box sx={{ fontSize: '12px', color: grey[500] }}>{formatTime(message.time)}</Box>
+                    <Box sx={{ fontSize: '12px', color: grey[500] }}></Box>
                   </CardContent>
                 </Card>
               </ListItem>
@@ -163,7 +152,7 @@ function ChatUI() {
               value={currentMessage}
               onChange={(e) => setCurrentMessage(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-              placeholder={`@${otherUserName}에게 메세지 보내기`}
+              placeholder={`@ 상대방 에게 메세지 보내기`}
               margin="normal"
               inputProps={{ style: { fontSize: '16px', color: 'white', height: '12px' } }}
             />

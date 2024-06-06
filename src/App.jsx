@@ -16,16 +16,9 @@ function App() {
   const deviceType = useDeviceType();
   const userType = useUserType();
 
-  /*
-  TODO-
-  1) 채널 추가,
-  2) 들어온 친구들
-  3) 
-   */
-
   return (
     <GlobalStateProvider>
-      <div className='container' style={{ display: 'flex', height: '100dvh', width:'100vw',overflow:'hidden' }}>
+      <div className='container' style={{ display: 'flex', height: '100dvh', width: '100vw', overflow: 'hidden' }}>
         {/* 내가 속한 채널 */}
         <div className='left-left' style={{
           backgroundColor: 'red',
@@ -64,7 +57,7 @@ function App() {
           overflow: 'hidden',
           border: '1px solid black',
           overflowY: 'scroll',
-          scrollbarWidth:'none'
+          scrollbarWidth: 'none'
         }}
         >
           <Right></Right>

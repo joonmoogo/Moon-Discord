@@ -6,43 +6,27 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ListItemButton from '@mui/material/ListItemButton';
 import { grey } from '@mui/material/colors';
+import { useEffect, useState } from 'react';
+import socket from '../util/socket';
+import { useGlobalState } from '../util/globalState';
 
 export default function Right() {
-    const list = [
-        { src: '/static/images/avatar/1.jpg', name: 'joon' },
-        { src: '/static/images/avatar/2.jpg', name: 'jan' },
-        { src: '/static/images/avatar/3.jpg', name: 'jin' },
-        { src: '/static/images/avatar/4.jpg', name: 'kook' },
-        { src: '/static/images/avatar/5.jpg', name: 'cook' },
-        { src: '/static/images/avatar/6.jpg', name: 'kang' },
-        { src: '/static/images/avatar/7.jpg', name: 'jjan' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-        { src: '/static/images/avatar/8.jpg', name: 'oooo' },
-    ]
+
+    const [channel,setChannel,userList,setUserList] = useGlobalState();
     return (
         
-        <List sx={{ width: '100%', bgcolor: grey[800] ,}} >
+        <List sx={{ width: '100%',height:'100%', bgcolor: grey[800]}} >
             {
-                list.map((e) => {
+                userList.map((e,i) => {
                     return (
                         <>
                             <ListItemButton>
                                 <ListItem alignItems="flex-start">
                                     <ListItemAvatar>
-                                        <Avatar alt="Remy Sharp" src={e.src} />
+                                        <Avatar alt="Remy Sharp" src={'../assets/react.svg'} />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={e.name}
+                                        primary={e.username}
                                     />
                                 </ListItem>
                                 <Divider variant="inset" component="li" />
