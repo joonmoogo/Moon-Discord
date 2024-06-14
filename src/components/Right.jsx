@@ -10,17 +10,26 @@ import { useEffect, useState } from 'react';
 import socket from '../util/socket';
 import { useGlobalState } from '../util/globalState';
 
-export default function Right() {
+export default function Right({ setIsPopup, setPopupPosition }) {
 
-    const [channel,setChannel,userList,setUserList] = useGlobalState();
+    const [channel, setChannel, userList, setUserList] = useGlobalState();
     return (
-        
-        <List sx={{ width: '100%',height:'100%', bgcolor: grey[800]}} >
+
+        <List sx={{ width: '100%', height: '100%', bgcolor: grey[800] }} >
             {
-                userList.map((e,i) => {
+                userList.map((e, i) => {
                     return (
                         <>
-                            <ListItemButton>
+                            <ListItemButton
+                                onContextMenu={(e) => {
+                                    e.preventDefault();
+                                    const { x, y } = e.nativeEvent;
+                                    setIsPopup(prevState => !prevState);
+                                    setPopupPosition({ x: x, y: y });
+                                }}
+                                onClick={() => {
+                                    setIsPopup(false);
+                                }}>
                                 <ListItem alignItems="flex-start">
                                     <ListItemAvatar>
                                         <Avatar alt="Remy Sharp" src={'../assets/react.svg'} />

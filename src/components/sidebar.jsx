@@ -9,13 +9,14 @@ import { useGlobalState } from '../util/globalState';
 
 function Sidebar() {
 
-	const [currentChannel,setCurrentChannel,userList,setUserList,user,setUser] = useGlobalState();
+	const [currentChannel, setCurrentChannel, userList, setUserList, user, setUser,thisChannel,setThisChannel] = useGlobalState();
 
 	const buttonClick = (name) =>{
 		socket.emit('getChannel',name);
 	}
 	const plusButtonClick = () =>{
 		const channelName = prompt('channel name is?');
+		// console.log({username:user.username,channelName:channelName});
 		socket.emit('channel',{username:user.username,channelName:channelName});
 	}
 	return (
@@ -28,10 +29,10 @@ function Sidebar() {
 			</div>
 
 			{user?.channels.map((channel, index) => (
-				<Tooltip title={channel.channelName} placement="right">
-				<div key={index} className="squircle" onClick={()=>{buttonClick(channel.channelName)}}>
+				<Tooltip title={channel} placement="right">
+				<div key={index} className="squircle" onClick={()=>{buttonClick(channel)}}>
 					{/* 채널 이름만 표시하도록 수정 */}
-					<Avatar sx={{bgcolor: (theme) => alpha(theme.palette.common.white, 0.0)}}>{channel.channelName}</Avatar>
+					<Avatar sx={{bgcolor: (theme) => alpha(theme.palette.common.white, 0.0)}}>{channel}</Avatar>
 				</div>
 				</Tooltip>
 			))}

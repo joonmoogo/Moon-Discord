@@ -13,8 +13,7 @@ function ChatUI() {
   const [messageTimes, setMessageTimes] = useState([]);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
-  const [myUserName, setMyUserName] = useState();
-  const [otherUserName, setOtherUserName] = useState();
+  const [myUserName, setMyUserName] = useState('hi');
 
   /* 채널 state는 전역 state임  */
   const [currentChannel, setCurrentChannel, userList, setUserList, user, setUser, thisChannel, setThisChannel] = useGlobalState();
@@ -22,8 +21,8 @@ function ChatUI() {
   useEffect(() => {
 
     socket.on('message', (data) => {
-      console.log(data);
-      setMessages([...messages, data]);
+      setMessages((prevMessages) => [...prevMessages, data]);
+      console.log([...messages, data]);
     })
   }, [])
 
@@ -55,9 +54,7 @@ function ChatUI() {
       username: user.username,
       time: new Date() // 메시지 보낸 시간
     };
-    console.log(newMessage);
     socket.emit('message', newMessage);
-    setMessages([...messages, newMessage]);
     setMessageTimes([...messageTimes, newTime]);
     setCurrentMessage("");
 
@@ -72,22 +69,18 @@ function ChatUI() {
   }, [messages]);
 
 
-
   // 시간을 원하는 포맷으로 변환하는 함수
   // const formatTime = (date) => {
   //   return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
   // };
 
-  // const myUserName = 'MYNAME';
-  const myUserId = socket.id;
+  // const myUserId = user.username;
   const myUserAvatar = 'U';
 
-  const otherUserId = 'user2';
-  // const otherUserName = 'OTHERNAME';
-  const otherUserAvatar = 'U';
+  const otherUserAvatar = 'O';
 
 
-  const isMyMessage = (userId) => userId === myUserId;
+  const isMyMessage = (userId) => userId === user?.username;
 
   return (
     <Box sx={{ overflow: 'auto' }}>
@@ -114,7 +107,7 @@ function ChatUI() {
                     <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>Other</Box>
                   </Box>
                   <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>테스트 용 메세지</Box> {/* 상대방 메세지 확인 용 테스트 List */}
-                  <Box sx={{ fontSize: '12px', color: grey[500] }}>{}</Box>
+                  <Box sx={{ fontSize: '12px', color: grey[500] }}>{ }</Box>
                 </CardContent>
               </Card>
             </ListItem>
@@ -122,7 +115,7 @@ function ChatUI() {
               <ListItem key={index} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginY: 1 }}>
                 <Card variant="borderless" sx={{ bgcolor: grey[800], padding: '8px 16px' }}>
                   <CardContent>
-                    {isMyMessage(message.userId) ? (
+                    {isMyMessage(message?.username) ? (
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {/* 내 메시지일 경우 */}
                         <Avatar sx={{ bgcolor: deepPurple[500], marginRight: 1 }}>{myUserAvatar}</Avatar>
@@ -132,7 +125,7 @@ function ChatUI() {
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {/* 상대방 메시지일 경우 */}
                         <Avatar sx={{ bgcolor: grey[500], marginRight: 1 }}>{otherUserAvatar}</Avatar>
-                        <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}></Box>
+                        <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>{message?.username}</Box>
                       </Box>
                     )}
                     <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>{message.text}</Box>
