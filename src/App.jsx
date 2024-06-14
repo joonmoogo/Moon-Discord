@@ -70,6 +70,7 @@ function App() {
           <div className='mid' style={{
             height: '100%',
             width: '72%',
+            backgroundColor:'#313338'
 
           }}
           >
@@ -80,8 +81,8 @@ function App() {
             height: '100%',
             width: '12%',
             overflow: 'hidden',
-            overflowY: 'scroll',
-            scrollbarWidth: 'none'
+            // overflowY: 'scroll',
+            // scrollbarWidth: 'none'
           }}
           >
             <Right setIsPopup={setIsPopup} setPopupPosition={setPopupPosition}></Right>

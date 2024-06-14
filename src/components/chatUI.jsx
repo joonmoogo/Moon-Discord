@@ -20,8 +20,8 @@ function ChatUI() {
   /* 채널 state는 전역 state임  */
   // const [currentChannel, setCurrentChannel, userList, setUserList, user, setUser, thisChannel, setThisChannel] = useGlobalState();
 
-  const [user,setUser] = useRecoilState(userState);
-  const [thisChannel,setThisChannel] = useRecoilState(thisChannelState)
+  const [user, setUser] = useRecoilState(userState);
+  const [thisChannel, setThisChannel] = useRecoilState(thisChannelState)
   useEffect(() => {
 
     socket.on('message', (data) => {
@@ -95,7 +95,7 @@ function ChatUI() {
           bgcolor: '#313338',
           padding: '10px',
         }}>
-          <Avatar sx={{ bgcolor: grey[500], width: '46px', height: '46px', fontSize: '20px' }}>{otherUserAvatar}</Avatar>
+          <Avatar sx={{ bgcolor: grey[500], width: '46px', height: '46px', fontSize: '20px' }}>#</Avatar>
           <Box sx={{ marginLeft: '10px', color: 'white', fontWeight: 'bold', fontSize: '15px' }}>
             {thisChannel.channelName}
           </Box>

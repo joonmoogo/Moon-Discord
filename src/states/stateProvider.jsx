@@ -13,6 +13,8 @@ export const GlobalStateProvider = ({ children }) => {
     const [user, setUser] = useRecoilState(userState);
     const [thisChannel, setThisChannel] = useRecoilState(thisChannelState);
 
+    console.log(userList);
+
     useEffect(() => {
         socket.on('user', (data) => {
             console.log(data);
