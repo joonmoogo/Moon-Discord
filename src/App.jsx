@@ -10,8 +10,9 @@ import { useState, useEffect } from 'react';
 import socket from './util/socket';
 import useDeviceType from './util/useDeviceType.';
 import useUserType from './util/useUserType';
-import { Box, Modal, Typography } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemText, Modal, Typography } from '@mui/material';
 import { GlobalStateProvider } from './states/stateProvider';
+
 function App() {
 
   const deviceType = useDeviceType();
@@ -26,9 +27,49 @@ function App() {
     return (
       visible === true
         ?
-        <div style={{ position: 'absolute', top: y + offset, left: x, zIndex: 999, backgroundColor: '#f9f9f9', height: '100px', width: '10%', color: 'black', }}>
-          <div style={{ border: '1px solid black', cursor: 'pointer' }} onClick={() => { alert('친구 추가') }}>친구 추가</div>
-        </div>
+        <List style={{
+          paddingTop:0,
+          paddingBottom:0,
+          position: 'absolute',
+          borderRadius: '10px',
+          top: y + offset,
+          left: x,
+          zIndex: 999,
+          backgroundColor: '#111214',
+          width: '10%',
+          color: '#aaafb6'
+        }}>
+          <ListItem >
+            <ListItemButton sx={{
+              '&:hover': {
+                backgroundColor: '#505cdc',
+                color: '#fff',
+              },
+            }} >
+              <ListItemText primary="친구 추가" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem >
+            <ListItemButton sx={{
+              '&:hover': {
+                backgroundColor: '#505cdc',
+                color: '#fff',
+              },
+            }}>
+              <ListItemText primary="채팅 하기" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem >
+            <ListItemButton sx={{
+              '&:hover': {
+                backgroundColor: '#505cdc',
+                color: '#fff',
+              },
+            }}>
+              <ListItemText primary="초대 하기" />
+            </ListItemButton>
+          </ListItem>
+        </List>
         : null
     )
   }
@@ -49,45 +90,45 @@ function App() {
 
   return (
     <>
-        <Popup visible={isPopup} position={popupPosition} />
-        <div className='container' style={{ display: 'flex', height: '100dvh', width: '100vw', overflow: 'hidden' }}>
-          {/* 내가 속한 채널 */}
-          <div className='left-left' style={{
-            height: '100%',
-            width: '4%',
-          }}>
-            <Sidebar />
-          </div>
-          {/* 채널 안에 속한 사람들 */}
-          <div className='left' style={{
-            height: '100%',
-            width: '12%',
-          }}
-          >
-            <SelectedListItem />
-          </div>
-          {/* 채팅 UI */}
-          <div className='mid' style={{
-            height: '100%',
-            width: '72%',
-            backgroundColor:'#313338'
-
-          }}
-          >
-            <ChatUI></ChatUI>
-          </div>
-          {/* 글로벌 친구 모음 */}
-          <div className='right' style={{
-            height: '100%',
-            width: '12%',
-            overflow: 'hidden',
-            // overflowY: 'scroll',
-            // scrollbarWidth: 'none'
-          }}
-          >
-            <Right setIsPopup={setIsPopup} setPopupPosition={setPopupPosition}></Right>
-          </div>
+      <Popup visible={isPopup} position={popupPosition} />
+      <div className='container' style={{ display: 'flex', height: '100dvh', width: '100vw', overflow: 'hidden' }}>
+        {/* 내가 속한 채널 */}
+        <div className='left-left' style={{
+          height: '100%',
+          width: '4%',
+        }}>
+          <Sidebar />
         </div>
+        {/* 채널 안에 속한 사람들 */}
+        <div className='left' style={{
+          height: '100%',
+          width: '12%',
+        }}
+        >
+          <SelectedListItem />
+        </div>
+        {/* 채팅 UI */}
+        <div className='mid' style={{
+          height: '100%',
+          width: '72%',
+          backgroundColor: '#313338'
+
+        }}
+        >
+          <ChatUI></ChatUI>
+        </div>
+        {/* 글로벌 친구 모음 */}
+        <div className='right' style={{
+          height: '100%',
+          width: '12%',
+          overflow: 'hidden',
+          // overflowY: 'scroll',
+          // scrollbarWidth: 'none'
+        }}
+        >
+          <Right setIsPopup={setIsPopup} setPopupPosition={setPopupPosition}></Right>
+        </div>
+      </div>
     </>
   );
 }
