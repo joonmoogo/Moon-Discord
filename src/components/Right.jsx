@@ -8,14 +8,16 @@ import ListItemButton from '@mui/material/ListItemButton';
 import { grey } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
 import socket from '../util/socket';
-import { useGlobalState } from '../util/globalState';
+import { useRecoilState } from 'recoil';
+import { userListState } from '../states/userList';
 
 export default function Right({ setIsPopup, setPopupPosition }) {
 
-    const [channel, setChannel, userList, setUserList] = useGlobalState();
+    const [userList, setUserList] = useRecoilState(userListState)
+
     return (
 
-        <List sx={{ width: '100%', height: '100%', bgcolor: grey[800] }} >
+        <List sx={{ width: '100%', height: '100%', bgcolor: '#2b2d31' }} >
             {
                 userList.map((e, i) => {
                     return (

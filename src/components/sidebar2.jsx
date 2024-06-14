@@ -13,12 +13,14 @@ import { deepPurple, grey } from '@mui/material/colors';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import socket from '../util/socket';
-import { useGlobalState } from '../util/globalState';
+import { useRecoilState } from 'recoil';
+import { thisChannelState } from '../states/thisChannel';
 
 export default function SelectedListItem() {
 
-  const [currentChannel, setCurrentChannel, userList, setUserList, user, setUser,thisChannel,setThisChannel] = useGlobalState();
+  // const [currentChannel, setCurrentChannel, userList, setUserList, user, setUser,thisChannel,setThisChannel] = useGlobalState();
 
+  const [thisChannel,setThisChannel] = useRecoilState(thisChannelState)
   const inviteButtonClick = () => {
 
   }
@@ -28,7 +30,7 @@ export default function SelectedListItem() {
   }
 
   return (
-    <Box sx={{ height: '100%', width: '100%', bgcolor: grey[800], display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ height: '100%', width: '100%', bgcolor: '#2b2d31', display: 'flex', flexDirection: 'column' }}>
 
       <List component="nav" aria-label="channel members" sx={{ flex: 1, overflowY: 'auto' }}>
         {/* <Avatar sx={{ bgcolor: deepPurple[500] }}>{user}</Avatar> */}

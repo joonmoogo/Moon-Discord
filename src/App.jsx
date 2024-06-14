@@ -10,8 +10,8 @@ import { useState, useEffect } from 'react';
 import socket from './util/socket';
 import useDeviceType from './util/useDeviceType.';
 import useUserType from './util/useUserType';
-import { GlobalStateProvider } from './util/globalState';
 import { Box, Modal, Typography } from '@mui/material';
+import { GlobalStateProvider } from './states/stateProvider';
 function App() {
 
   const deviceType = useDeviceType();
@@ -49,34 +49,27 @@ function App() {
 
   return (
     <>
-      <GlobalStateProvider>
         <Popup visible={isPopup} position={popupPosition} />
         <div className='container' style={{ display: 'flex', height: '100dvh', width: '100vw', overflow: 'hidden' }}>
           {/* 내가 속한 채널 */}
           <div className='left-left' style={{
-            backgroundColor: 'red',
             height: '100%',
-            width: '5%',
-            border: '1px solid black',
+            width: '4%',
           }}>
             <Sidebar />
           </div>
           {/* 채널 안에 속한 사람들 */}
           <div className='left' style={{
-            backgroundColor: 'orange',
             height: '100%',
-            width: '20%',
-            border: '1px solid black',
+            width: '12%',
           }}
           >
             <SelectedListItem />
           </div>
           {/* 채팅 UI */}
           <div className='mid' style={{
-            backgroundColor: 'blue',
             height: '100%',
-            width: '60%',
-            border: '1px solid black',
+            width: '72%',
 
           }}
           >
@@ -84,11 +77,9 @@ function App() {
           </div>
           {/* 글로벌 친구 모음 */}
           <div className='right' style={{
-            backgroundColor: 'green',
             height: '100%',
-            width: '15%',
+            width: '12%',
             overflow: 'hidden',
-            border: '1px solid black',
             overflowY: 'scroll',
             scrollbarWidth: 'none'
           }}
@@ -96,7 +87,6 @@ function App() {
             <Right setIsPopup={setIsPopup} setPopupPosition={setPopupPosition}></Right>
           </div>
         </div>
-      </GlobalStateProvider>
     </>
   );
 }

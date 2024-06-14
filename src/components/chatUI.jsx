@@ -2,9 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Box, Paper, List, ListItem, Card, CardContent, Avatar, TextField, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { deepPurple, grey } from '@mui/material/colors';
+import { deepOrange, deepPurple, grey } from '@mui/material/colors';
 import socket from '../util/socket';
-import { useGlobalState } from '../util/globalState';
+import { useRecoilState } from 'recoil';
+import { userState } from '../states/user';
+import { thisChannelState } from '../states/thisChannel';
 
 function ChatUI() {
   const [messages, setMessages] = useState([]);
@@ -16,8 +18,10 @@ function ChatUI() {
   const [myUserName, setMyUserName] = useState('hi');
 
   /* 채널 state는 전역 state임  */
-  const [currentChannel, setCurrentChannel, userList, setUserList, user, setUser, thisChannel, setThisChannel] = useGlobalState();
+  // const [currentChannel, setCurrentChannel, userList, setUserList, user, setUser, thisChannel, setThisChannel] = useGlobalState();
 
+  const [user,setUser] = useRecoilState(userState);
+  const [thisChannel,setThisChannel] = useRecoilState(thisChannelState)
   useEffect(() => {
 
     socket.on('message', (data) => {
@@ -84,11 +88,11 @@ function ChatUI() {
 
   return (
     <Box sx={{ overflow: 'auto' }}>
-      <Box sx={{ width: '100%', bgcolor: grey[900] }}>
+      <Box sx={{ width: '100%', bgcolor: '#313338' }}>
         <Box sx={{
           display: 'flex',
           alignItems: 'center',
-          bgcolor: grey[900],
+          bgcolor: '#313338',
           padding: '10px',
         }}>
           <Avatar sx={{ bgcolor: grey[500], width: '46px', height: '46px', fontSize: '20px' }}>{otherUserAvatar}</Avatar>
@@ -96,10 +100,10 @@ function ChatUI() {
             {thisChannel.channelName}
           </Box>
         </Box>
-        <Paper elevation={3} sx={{ bgcolor: grey[800] }}>
-          <List sx={{ maxHeight: `${windowHeight}`, height: `${windowHeight - 191}px`, overflow: 'auto', bgcolor: grey[800] }}>
+        <Paper elevation={3} sx={{ bgcolor: '#313338' }}>
+          <List sx={{ maxHeight: `${windowHeight}`, height: `${windowHeight - 191}px`, overflow: 'auto', bgcolor: '#313338' }}>
             <ListItem key="1" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginY: 1 }}>
-              <Card variant="borderless" sx={{ bgcolor: grey[800], padding: '8px 16px' }}>
+              <Card variant="borderless" sx={{ bgcolor: '#313338', padding: '8px 16px' }}>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     {/* 상대방 메시지일 경우 */}
@@ -107,13 +111,13 @@ function ChatUI() {
                     <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>Other</Box>
                   </Box>
                   <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>테스트 용 메세지</Box> {/* 상대방 메세지 확인 용 테스트 List */}
-                  <Box sx={{ fontSize: '12px', color: grey[500] }}>{ }</Box>
+                  <Box sx={{ fontSize: '12px', color: '#313338' }}>{ }</Box>
                 </CardContent>
               </Card>
             </ListItem>
             {messages.map((message, index) => (
               <ListItem key={index} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginY: 1 }}>
-                <Card variant="borderless" sx={{ bgcolor: grey[800], padding: '8px 16px' }}>
+                <Card variant="borderless" sx={{ bgcolor: '#313338', padding: '8px 16px' }}>
                   <CardContent>
                     {isMyMessage(message?.username) ? (
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -124,12 +128,12 @@ function ChatUI() {
                     ) : (
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {/* 상대방 메시지일 경우 */}
-                        <Avatar sx={{ bgcolor: grey[500], marginRight: 1 }}>{otherUserAvatar}</Avatar>
+                        <Avatar sx={{ bgcolor: deepOrange[500], marginRight: 1 }}>{otherUserAvatar}</Avatar>
                         <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>{message?.username}</Box>
                       </Box>
                     )}
                     <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>{message.text}</Box>
-                    <Box sx={{ fontSize: '12px', color: grey[500] }}></Box>
+                    <Box sx={{ fontSize: '12px', color: '#313338' }}></Box>
                   </CardContent>
                 </Card>
               </ListItem>
