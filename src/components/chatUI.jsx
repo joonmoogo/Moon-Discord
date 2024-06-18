@@ -7,6 +7,7 @@ import socket from '../util/socket';
 import { useRecoilState } from 'recoil';
 import { userState } from '../states/user';
 import { thisChannelState } from '../states/thisChannel';
+import { myUsernameState } from '../states/myUsername';
 
 function ChatUI() {
   const [messages, setMessages] = useState([]);
@@ -15,27 +16,21 @@ function ChatUI() {
   const [messageTimes, setMessageTimes] = useState([]);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
-  const [myUserName, setMyUserName] = useState('hi');
 
   /* 채널 state는 전역 state임  */
   // const [currentChannel, setCurrentChannel, userList, setUserList, user, setUser, thisChannel, setThisChannel] = useGlobalState();
 
   const [user, setUser] = useRecoilState(userState);
   const [thisChannel, setThisChannel] = useRecoilState(thisChannelState)
+  const [myUserName, setMyUserName] = useRecoilState(myUsernameState);
+
+
   useEffect(() => {
 
     socket.on('message', (data) => {
       setMessages((prevMessages) => [...prevMessages, data]);
       console.log([...messages, data]);
     })
-  }, [])
-
-  useEffect(() => {
-    const username = prompt('username?');
-    if (username) {
-      setMyUserName(username);
-      socket.emit('user', { name: username });
-    }
   }, [])
 
   useEffect(() => {
@@ -79,7 +74,7 @@ function ChatUI() {
   // };
 
   // const myUserId = user.username;
-  const myUserAvatar = 'U';
+  const myUserAvatar = '';
 
   const otherUserAvatar = 'O';
 
@@ -108,9 +103,9 @@ function ChatUI() {
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     {/* 상대방 메시지일 경우 */}
                     <Avatar sx={{ bgcolor: grey[500], marginRight: 1 }}>{otherUserAvatar}</Avatar>
-                    <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>Other</Box>
+                    <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>Admin</Box>
                   </Box>
-                  <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>테스트 용 메세지</Box> {/* 상대방 메세지 확인 용 테스트 List */}
+                  <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>테스트 용 메세지 👋</Box> {/* 상대방 메세지 확인 용 테스트 List */}
                   <Box sx={{ fontSize: '12px', color: '#313338' }}>{ }</Box>
                 </CardContent>
               </Card>

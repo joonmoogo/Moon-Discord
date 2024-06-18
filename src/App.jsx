@@ -12,14 +12,37 @@ import useDeviceType from './util/useDeviceType.';
 import useUserType from './util/useUserType';
 import { Box, List, ListItem, ListItemButton, ListItemText, Modal, Typography } from '@mui/material';
 import { GlobalStateProvider } from './states/stateProvider';
+import { useRecoilState } from 'recoil';
+import { myUsernameState } from './states/myUsername';
 
 function App() {
 
   const deviceType = useDeviceType();
   const userType = useUserType();
+  const [myUserName,setMyUserName] = useRecoilState(myUsernameState);
 
   const [isPopup, setIsPopup] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
+
+
+  useEffect(() => {
+    const history = JSON.parse(localStorage.getItem('history'));
+    if (!history) {
+      const username = prompt('username?');
+      if (username) {
+        setMyUserName(username);
+        localStorage.setItem('history',JSON.stringify(username));
+        socket.emit('user', { name: username });
+      }
+      else{
+        alert('유저 네임 입력 안했어')
+      }
+    }
+    else{
+
+    }
+
+  }, [])
 
   const Popup = ({ visible, position }) => {
     const { x, y } = position
@@ -28,8 +51,8 @@ function App() {
       visible === true
         ?
         <List style={{
-          paddingTop:0,
-          paddingBottom:0,
+          paddingTop: 0,
+          paddingBottom: 0,
           position: 'absolute',
           borderRadius: '10px',
           top: y + offset,
