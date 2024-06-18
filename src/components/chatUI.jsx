@@ -78,6 +78,32 @@ function ChatUI() {
 
   const otherUserAvatar = 'O';
 
+  const [greeting, setGreeting] = useState([]);
+
+  const renderGreeting = () => {
+    setTimeout(() => {
+      setGreeting([{ name: 'admin', content: '안녕하세요 👋' }]);
+    }, 1000);
+
+    setTimeout(() => {
+      setGreeting((prevGreeting) => [
+        ...prevGreeting,
+        { name: 'admin', content: '반가워요 !' }
+      ]);
+    }, 3000);
+
+    setTimeout(() => {
+      setGreeting((prevGreeting) => [
+        ...prevGreeting,
+        { name: 'admin', content: '잘 부탁드려요' }
+      ]);
+    }, 6000);
+  };
+
+  useEffect(() => {
+    renderGreeting();
+  }, [])
+
 
   const isMyMessage = (userId) => userId === user?.username;
 
@@ -92,22 +118,27 @@ function ChatUI() {
         }}>
           <Avatar sx={{ bgcolor: grey[500], width: '46px', height: '46px', fontSize: '20px' }}>#</Avatar>
           <Box sx={{ marginLeft: '10px', color: 'white', fontWeight: 'bold', fontSize: '15px' }}>
-            {thisChannel.channelName}
+            {thisChannel.channelName ? thisChannel.channelName : 'moon discord'}
+
           </Box>
         </Box>
         <Paper elevation={3} sx={{ bgcolor: '#313338' }}>
           <List sx={{ maxHeight: `${windowHeight}`, height: `${windowHeight - 191}px`, overflow: 'auto', bgcolor: '#313338' }}>
             <ListItem key="1" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginY: 1 }}>
               <Card variant="borderless" sx={{ bgcolor: '#313338', padding: '8px 16px' }}>
-                <CardContent>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {/* 상대방 메시지일 경우 */}
-                    <Avatar sx={{ bgcolor: grey[500], marginRight: 1 }}>{otherUserAvatar}</Avatar>
-                    <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>Admin</Box>
-                  </Box>
-                  <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>테스트 용 메세지 👋</Box> {/* 상대방 메세지 확인 용 테스트 List */}
-                  <Box sx={{ fontSize: '12px', color: '#313338' }}>{ }</Box>
-                </CardContent>
+                {greeting.map((e) => {
+                  return (
+                    <CardContent>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        {/* 상대방 메시지일 경우 */}
+                        <Avatar sx={{ bgcolor: grey[500], marginRight: 1 }}>{otherUserAvatar}</Avatar>
+                        <Box sx={{ fontWeight: 'bold', color: 'white', fontSize: '20px', marginTop: '-3px' }}>{e.name}</Box>
+                      </Box>
+                      <Box sx={{ fontSize: '16px', wordWrap: 'break-word', color: 'white' }}>{e.content}</Box> {/* 상대방 메세지 확인 용 테스트 List */}
+                      <Box sx={{ fontSize: '12px', color: '#313338' }}>{ }</Box>
+                    </CardContent>
+                  )
+                })}
               </Card>
             </ListItem>
             {messages.map((message, index) => (

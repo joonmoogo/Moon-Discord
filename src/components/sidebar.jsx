@@ -41,8 +41,9 @@ function Sidebar() {
 	};
 	return (
 
-		<div className="left_left_box" style={{ overflow: 'hidden' }}>
-			<div className="squircle">
+		<div className="left_left_box" >
+			<div className="squircle" style={{overflow:'hidden'}}>
+				<div>Me</div>
 			</div>
 
 			<div className="divider">
