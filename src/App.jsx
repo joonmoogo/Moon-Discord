@@ -39,7 +39,8 @@ function App() {
       }
     }
     else{
-
+      setMyUserName(JSON.stringify(history));
+      socket.emit('user',{name:JSON.stringify(history)});
     }
 
   }, [])
