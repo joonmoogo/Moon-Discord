@@ -13,30 +13,36 @@ export const GlobalStateProvider = ({ children }) => {
     const [user, setUser] = useRecoilState(userState);
     const [thisChannel, setThisChannel] = useRecoilState(thisChannelState);
 
-    console.log(userList);
-
     useEffect(() => {
         socket.on('user', (data) => {
-            console.log(data);
+            console.log('socket.on(user): ',data);
             setUser(data);
             setCurrentChannel(data.currentChannel);
         });
 
         socket.on('userlist', (data) => {
+            console.log('socket.on(userList): ',data)
             setUserList(data);
         });
 
         socket.on('channel', (data) => {
-            console.log(data);
+            console.log('socket.on(channel): ',data);
             setUser(data);
         });
 
         socket.on('channelJoin', (data) => {
-            console.log(data);
+            console.log('socket.on(channelJoin): ',data);
+            const {channelData,userData} = data;
+            setThisChannel(channelData);
+            setCurrentChannel(userData.currentChannel);
+            setUser(userData);
         });
 
         socket.on('getChannel', (data) => {
-            setThisChannel(data);
+            const {channelData,userData} = data;
+            setThisChannel(channelData);
+            setUser(userData);
+            console.log('socket.on(getChannel): ',data)
         });
 
         return () => {

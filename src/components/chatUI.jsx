@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../states/user';
 import { thisChannelState } from '../states/thisChannel';
 import { myUsernameState } from '../states/myUsername';
+import { currentChannelState } from '../states/currentChannel';
 
 function ChatUI() {
   const [messages, setMessages] = useState([]);
@@ -26,7 +27,6 @@ function ChatUI() {
 
 
   useEffect(() => {
-
     socket.on('message', (data) => {
       setMessages((prevMessages) => [...prevMessages, data]);
       console.log([...messages, data]);
@@ -45,18 +45,84 @@ function ChatUI() {
     };
   }, []);
 
+  const [currentChannel, setCurrentChannel] = useRecoilState(currentChannelState)
+
   const sendMessage = () => {
     const newTime = new Date();
-    const newMessage = {
-      room: thisChannel.channelName,
-      text: currentMessage, // 메시지 텍스트
-      username: user.username,
-      time: new Date() // 메시지 보낸 시간
-    };
-    socket.emit('message', newMessage);
-    setMessageTimes([...messageTimes, newTime]);
-    setCurrentMessage("");
+    if (currentMessage === '!greet') {
 
+      socket.emit('message', { room: currentChannel, text: currentMessage, username: user.username, time: new Date() });
+      setMessageTimes([...messageTimes, newTime]);
+      setCurrentMessage("");
+
+      const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+      const botChat = async () => {
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+        const FIRST_WORD = ['안녕하세요 👋', '반가워요', 'ㅎㅇ', '왜요', '누구세요', 'ㅎㅇ요',]
+        const SECOND_WORD = ['안녕히가세요', '랩 해줄까요?', 'ㅎㅎ', 'ㅋㅋㅋ']
+
+        const first_message = {
+          room: currentChannel,
+          text: getRandomElement(FIRST_WORD),
+          username: 'BOT',
+          time: new Date()
+        }
+
+        await delay(1000);
+        socket.emit('message', first_message);
+
+        const second_message = {
+          room: currentChannel,
+          text: getRandomElement(SECOND_WORD),
+          username: 'BOT',
+          time: new Date()
+        }
+        await delay(2500);
+        socket.emit('message', second_message);
+      }
+
+      botChat();
+    }
+
+    else if (currentMessage === '!badword') {
+      socket.emit('message', { room: currentChannel, text: currentMessage, username: user.username, time: new Date() });
+      setMessageTimes([...messageTimes, newTime]);
+      setCurrentMessage("");
+
+      const botChat = async () => {
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+        let newMessage = {
+          room: currentChannel,
+          text: 'x발',
+          username: 'BOT',
+          time: new Date()
+        }
+
+        await delay(2000);
+        socket.emit('message', newMessage);
+
+        newMessage.text = 'x까';
+        await delay(3000);
+        socket.emit('message', newMessage);
+      }
+
+      botChat();
+    }
+
+    else {
+      const newMessage = {
+        room: currentChannel,
+        text: currentMessage, // 메시지 텍스트
+        username: user.username,
+        time: new Date() // 메시지 보낸 시간
+      };
+      socket.emit('message', newMessage);
+      setMessageTimes([...messageTimes, newTime]);
+      setCurrentMessage("");
+    }
   };
 
   const scrollToBottom = () => {
@@ -67,42 +133,19 @@ function ChatUI() {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    setMessages(thisChannel.chattingLogs);
+  }, [thisChannel])
 
-  // 시간을 원하는 포맷으로 변환하는 함수
-  // const formatTime = (date) => {
-  //   return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-  // };
-
-  // const myUserId = user.username;
   const myUserAvatar = '';
 
   const otherUserAvatar = 'O';
 
   const [greeting, setGreeting] = useState([]);
 
-  const renderGreeting = () => {
-    setTimeout(() => {
-      setGreeting([{ name: 'admin', content: '안녕하세요 👋' }]);
-    }, 1000);
-
-    setTimeout(() => {
-      setGreeting((prevGreeting) => [
-        ...prevGreeting,
-        { name: 'admin', content: '반가워요 !' }
-      ]);
-    }, 3000);
-
-    setTimeout(() => {
-      setGreeting((prevGreeting) => [
-        ...prevGreeting,
-        { name: 'admin', content: '잘 부탁드려요' }
-      ]);
-    }, 6000);
-  };
-
   useEffect(() => {
-    renderGreeting();
-  }, [])
+    setGreeting([]);
+  }, [thisChannel])
 
 
   const isMyMessage = (userId) => userId === user?.username;

@@ -17,13 +17,15 @@ function Sidebar() {
 	const [user, setUser] = useRecoilState(userState)
 
 
-	const buttonClick = (name) => {
-		socket.emit('getChannel', name);
+	const buttonClick = (data) => {
+		socket.emit('channelJoin', data);
 	}
 	const plusButtonClick = () => {
 		const channelName = prompt('channel name is?');
 		// console.log({username:user.username,channelName:channelName});
-		socket.emit('channel', { username: user.username, channelName: channelName });
+		if (channelName != '') {
+			socket.emit('channel', { username: user.username, channelName: channelName });
+		}
 	}
 
 	const [isPlusButtonHovered, setIsPlusButtonHovered] = useState(false);
@@ -42,8 +44,8 @@ function Sidebar() {
 	return (
 
 		<div className="left_left_box" >
-			<div className="squircle" style={{overflow:'hidden'}}>
-				<div>Me</div>
+			<div className="squircle" style={{ overflow: 'hidden' }}>
+				<div>{user?.username}</div>
 			</div>
 
 			<div className="divider">
@@ -51,7 +53,7 @@ function Sidebar() {
 
 			{user?.channels.map((channel, index) => (
 				<Tooltip title={channel} placement="right">
-					<div key={index} className="squircle" onClick={() => { buttonClick(channel) }}>
+					<div key={index} className="squircle" onClick={() => { buttonClick({username:user.username, channelName:channel}) }}>
 						{/* 채널 이름만 표시하도록 수정 */}
 						{channel}
 					</div>
